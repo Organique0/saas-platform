@@ -1,0 +1,6 @@
+text-sky-500 #0ea5e9
+text-violet-500 #8b5cf6
+text-pink-500 #ec4899
+text-orange-500 #f97316
+text-emerald-500 #10b981
+text-green-500 #22c55e
