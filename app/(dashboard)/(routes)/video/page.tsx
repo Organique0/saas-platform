@@ -5,23 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants";
 import { Heading } from "@/components/Heading";
 import { useForm } from "react-hook-form";
-import { LuMessageSquare } from "react-icons/lu";
+import { LuMusic, LuVideo } from "react-icons/lu";
 import { RxDoubleArrowRight } from "react-icons/rx";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChatCompletionRequestMessage } from "openai";
 import { Empty } from "@/components/Empty";
 import Loader from "@/components/Loader";
-import { cn } from "@/lib/utils";
-import BotAvatar from "@/components/BotAvatar";
-import { UserAvatar } from "@/components/userAvatar";
 
-const ConversationPage = () => {
-    const router = useRouter();
-    const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+const VideoPage = () => {
+    const [video, setVideo] = useState<string>();
+    const [message, setMessage] = useState<string>("");
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -34,13 +29,10 @@ const ConversationPage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const userMessage: ChatCompletionRequestMessage = {
-                role: "user",
-                content: values.prompt,
-            };
-            const newMessages = [...messages, userMessage];
-            const response = await axios.post("/api/conversation", { messages: newMessages });
-            setMessages((current) => [...current, userMessage, response.data]);
+            setVideo(undefined);
+            setMessage(form.getValues("prompt"));
+            const response = await axios.post("/api/video", values);
+            setVideo(response.data[0]);
             form.reset();
 
         } catch (error: any) {
@@ -52,11 +44,11 @@ const ConversationPage = () => {
     return (
         <div>
             <Heading
-                title="Conversation"
-                description="Advanced conversation model"
-                icon={LuMessageSquare}
-                iconColor="text-violet-500"
-                bgColor="bg-violet-500/10"
+                title="Video generation"
+                description="Create videos using AI"
+                icon={LuVideo}
+                iconColor="text-orange-700"
+                bgColor="bg-orange-700/10"
             />
             <div className="px-4 lg:px-8">
                 <div>
@@ -68,7 +60,7 @@ const ConversationPage = () => {
                                         <Input
                                             className="border-0 focus-visible:ring-0 focus-visible:ring-transparent shadow-none"
                                             disabled={isLoading}
-                                            placeholder="Send a Message"
+                                            placeholder="Enter a prompt"
                                             {...field}
                                             {...form.register('prompt')}
                                         />
@@ -81,42 +73,34 @@ const ConversationPage = () => {
                         </form>
                     </Form>
                 </div>
-                <div className="mt-5">
-                    {isLoading && (
-                        <div className="w-full flex items-center justify-center">
-                            <Loader color="#8b5cf6" />
+                <div className="">
+                    {message && !isLoading && (
+                        <div className="w-full p-2 rounded-md text-2xl uppercase text-center mt-5">
+                            {message}
                         </div>
                     )}
-                    {messages.length === 0 && !isLoading && (
-                        <Empty label="No convesations" />
-                    )}
-                    <div className="flex flex-col-reverse gap-y-4">
-                        {messages.map((message) => (
-                            <div
-                                key={message.content + "" + Math.random()}
-                                className={cn(
-                                    `p-8 
-                                    w-full 
-                                    flex 
-                                    items-start 
-                                    gap-x-8 
-                                    rounded-lg
 
-                                    `,
-                                    message.role === "user" ? "bg-white border border-black/10" : "bg-muted")
-                                }
-                            >
-                                {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                                <p className="text-sm">
-                                    {message.content}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
+                    {isLoading && (
+                        <div className="w-full flex items-center justify-center">
+                            <Loader color="#f97316" />
+                            This may take a while
+                        </div>
+                    )}
+                    {!video && !isLoading && (
+                        <Empty label="No video generated" />
+                    )}
+                    {video && (
+                        <div className="w-full flex justify-center items-center">
+                            <video controls className="w-[50%] aspect-video mt-8 rounded-lg border bg-black">
+                                <source src={video} />
+                            </video>
+                        </div>
+
+                    )}
                 </div>
             </div>
         </div >
     );
 }
 
-export default ConversationPage;
+export default VideoPage;
