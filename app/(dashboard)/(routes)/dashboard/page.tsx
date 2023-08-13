@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { LuArrowRight, LuCode, LuImage, LuMessageSquare, LuMusic, LuVideo } from "react-icons/lu";
 
-const tools = [
+export const tools = [
     {
         label: "Conversation",
         icon: LuMessageSquare,
