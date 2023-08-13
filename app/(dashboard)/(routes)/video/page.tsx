@@ -13,8 +13,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Empty } from "@/components/Empty";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 
 const VideoPage = () => {
+    const router = useRouter();
     const [video, setVideo] = useState<string>();
     const [message, setMessage] = useState<string>("");
 
@@ -38,7 +40,7 @@ const VideoPage = () => {
         } catch (error: any) {
             //console.log(error);
         } finally {
-
+            router.refresh();
         }
     }
     return (

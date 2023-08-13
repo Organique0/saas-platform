@@ -19,8 +19,10 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const ImagePage = () => {
+    const router = useRouter();
     const [images, setImages] = useState<string[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -46,7 +48,7 @@ const ImagePage = () => {
         } catch (error: any) {
             //console.log(error);
         } finally {
-
+            router.refresh();
         }
     }
     return (

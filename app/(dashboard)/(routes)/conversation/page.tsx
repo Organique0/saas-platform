@@ -46,7 +46,7 @@ const ConversationPage = () => {
         } catch (error: any) {
             //console.log(error);
         } finally {
-
+            router.refresh();
         }
     }
     return (
