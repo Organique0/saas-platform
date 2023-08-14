@@ -21,6 +21,7 @@ import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProModal } from "@/hooks/view-pro-modal";
+import toast from "react-hot-toast";
 
 const ImagePage = () => {
     const router = useRouter();
@@ -50,6 +51,8 @@ const ImagePage = () => {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 proModal.onOpen();
+            } else {
+                toast.error("Somethign went wrong")
             }
         } finally {
             router.refresh();
