@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 
 interface MobileSidebarProps {
     apiLimitCount: number;
+    isPro: boolean;
 }
 
-const MobileSidebar = ({ apiLimitCount }: MobileSidebarProps) => {
+const MobileSidebar = ({ apiLimitCount, isPro }: MobileSidebarProps) => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
         setMounted(true);
@@ -22,7 +23,7 @@ const MobileSidebar = ({ apiLimitCount }: MobileSidebarProps) => {
                 <HamburgerMenuIcon width="22" height="22" />
             </SheetTrigger>
             <SheetContent side="left" className="p-0">
-                <Sidebar apiLimitCount={apiLimitCount} />
+                <Sidebar apiLimitCount={apiLimitCount} isPro={isPro} />
             </SheetContent>
         </Sheet>
     );
