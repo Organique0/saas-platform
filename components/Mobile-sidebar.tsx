@@ -19,7 +19,7 @@ const MobileSidebar = ({ apiLimitCount, isPro }: MobileSidebarProps) => {
 
     return (
         <Sheet>
-            <SheetTrigger>
+            <SheetTrigger className="md:hidden lg:hidden">
                 <HamburgerMenuIcon width="22" height="22" />
             </SheetTrigger>
             <SheetContent side="left" className="p-0">
