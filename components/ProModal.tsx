@@ -3,7 +3,7 @@
 import { useProModal } from "@/hooks/view-pro-modal";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Badge } from "./ui/badge";
-import { tools } from "@/app/(dashboard)/(routes)/dashboard/page";
+import { tools } from "@/tools";
 import { LuCheck, LuCode, LuImage, LuMessageSquare, LuMusic, LuVideo, LuZap } from "react-icons/lu";
 import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
