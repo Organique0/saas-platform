@@ -6,7 +6,8 @@ import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 import { LuZap } from "react-icons/lu";
 import { useProModal } from "@/hooks/view-pro-modal";
-import { MAX_FREE_COUNTS } from "@/constants";
+import axios from "axios";
+
 
 interface FreeCounterProps {
     apiLimitCount: number;
@@ -15,10 +16,21 @@ interface FreeCounterProps {
 
 const FreeCounter = ({ apiLimitCount, isPro }: FreeCounterProps) => {
     const [mounted, setMounted] = useState(false);
+    const [maxFree, setMaxFree] = useState(0);
     const proModal = useProModal();
+
 
     useEffect(() => {
         setMounted(true);
+        const fetchMaxFreeCounts = async () => {
+            try {
+                const response = await axios.post('/api/maxFreeCounts');
+                setMaxFree(response.data.maxFreeCounts);
+            } catch (error) {
+                console.error('Error fetching MAX_FREE_COUNTS:', error);
+            }
+        };
+        fetchMaxFreeCounts();
     }, []);
     if (!mounted) return null;
 
@@ -30,9 +42,9 @@ const FreeCounter = ({ apiLimitCount, isPro }: FreeCounterProps) => {
                 <CardContent className="py-6">
                     <div className="text-center text-sm text-white mb-4 space-y-2">
                         <div>
-                            {apiLimitCount} / {MAX_FREE_COUNTS} Free generations
+                            {apiLimitCount} / {maxFree} Free generations
                         </div>
-                        <Progress className="h-3 bg-white" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} />
+                        <Progress className="h-3 bg-white" value={(apiLimitCount / maxFree) * 100} />
                     </div>
                     <Button className="w-full" variant="premium" onClick={proModal.onOpen}>
                         Upgrade <LuZap className="w-4 h-4 ml-2 fill-white" />
