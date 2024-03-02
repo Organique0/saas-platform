@@ -1,1 +1,1 @@
-export const MAX_FREE_COUNTS = 5;
+export const MAX_FREE_COUNTS = process.env.MAX_FREE_COUNTS != null ? parseInt(process.env.MAX_FREE_COUNTS) : 0;

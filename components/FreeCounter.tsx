@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "./ui/card";
-import { MAX_FREE_COUNTS } from "@/constants";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 import { LuZap } from "react-icons/lu";
 import { useProModal } from "@/hooks/view-pro-modal";
+import { MAX_FREE_COUNTS } from "@/constants";
 
 interface FreeCounterProps {
     apiLimitCount: number;
