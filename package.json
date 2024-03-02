@@ -10,7 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.23.2",
+    "@clerk/nextjs": "^4.29.9",
     "@hookform/resolvers": "^3.2.0",
     "@prisma/client": "^5.1.1",
     "@radix-ui/react-avatar": "^1.0.3",
@@ -30,9 +30,9 @@
     "crisp-sdk-web": "^1.0.21",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
-    "next": "13.4.13",
+    "next": "^13.4.13",
     "openai": "^3.3.0",
-    "postcss": "8.4.27",
+    "postcss": "^8.4.35",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
